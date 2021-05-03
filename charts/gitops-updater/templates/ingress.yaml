@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "gitops-updater-ingress"
+  namespace: "{{ .Release.Namespace }}"
+  annotations:
+    kubernetes.io/ingress.class: "{{ .Values.ingress_class }}"
+spec:
+  tls:
+    - hosts:
+        - "{{ .Values.hostname }}"
+  rules:
+    - host: "{{ .Values.hostname }}"
+      http:
+        paths:
+          - path: /gitops-updater
+            pathType: Prefix
+            backend:
+              service:
+                name: gitops-updater
+                port:
+                  number: 80

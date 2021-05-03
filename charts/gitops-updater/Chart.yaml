@@ -1,0 +1,6 @@
+apiVersion: v2
+name: gitops-updater
+description: A webserver that updates version in yaml files within a git repository
+type: application
+version: 0.1.0
+appVersion: 0.1.0

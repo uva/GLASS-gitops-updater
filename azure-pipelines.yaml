@@ -1,0 +1,12 @@
+trigger:
+  - main
+
+pool: GLASS
+
+jobs:
+  - job: build
+    steps:
+      - script: |
+          set -euxo pipefail
+          helm lint charts/gitops-updater
+        displayName: Run linter
