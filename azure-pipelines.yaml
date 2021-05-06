@@ -10,3 +10,35 @@ jobs:
           set -euxo pipefail
           helm lint charts/gitops-updater
         displayName: Run linter
+
+      - script: |
+          set -euxo pipefail
+          az login --service-principal -u "${AZ_SP_NAME}" -p "${AZ_SP_PASSWORD}" --tenant "${AZ_SP_TENANT}"
+          az acr login -n "${ACR_NAME}"
+          helm registry login "${ACR_NAME}.azurecr.io" --username "${AZ_SP_APP_ID}" --password "${AZ_SP_PASSWORD}"
+        displayName: Login to Azure
+        env:
+          CI: true
+          HELM_EXPERIMENTAL_OCI: 1
+          AZ_SP_APP_ID: "$(AZ_SP_APP_ID)"
+          AZ_SP_NAME: "$(AZ_SP_NAME)"
+          AZ_SP_PASSWORD: "$(AZ_SP_PASSWORD)"
+          AZ_SP_TENANT: "$(AZ_SP_TENANT)"
+
+      - script: |
+          set -euxo pipefail
+          docker build -t "${ACR_NAME}.azurecr.io/gitops-updater:latest" .
+          docker push "${ACR_NAME}.azurecr.io/gitops-updater:latest"
+        displayName: Build Docker container
+        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+
+      - script: |
+          set -euxo pipefail
+          VERSION="0.${BUILD_BUILDNUMBER}"
+          helm package --version $VERSION --app-version $VERSION charts/gitops-updater
+          helm chart save "gitops-updater-$VERSION.tgz" "glass.azurecr.io/helm/gitops-updater:$VERSION"
+          helm chart push "glass.azurecr.io/helm/gitops-updater:$VERSION"
+        displayName: Build Helm chart and push to registry
+        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+        env:
+          HELM_EXPERIMENTAL_OCI: 1
