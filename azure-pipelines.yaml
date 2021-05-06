@@ -29,7 +29,7 @@ jobs:
           set -euxo pipefail
           docker build -t "${ACR_NAME}.azurecr.io/gitops-updater:latest" .
           docker push "${ACR_NAME}.azurecr.io/gitops-updater:latest"
-        displayName: Build Docker container
+        displayName: Build Docker container and push to registry
         condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
 
       - script: |
