@@ -5,4 +5,10 @@ metadata:
   namespace: "{{ .Release.Namespace }}"
 data:
   config.yaml: |
-{{ .Values.config | indent 4 }}
+{{- range .Values.config }}
+    - name: {{ .name }}
+      repo: {{ .repo }}
+      branch: {{ .branch }}
+      manifest: {{ .manifest }}
+      secretPath: {{ .secretPath }}
+{{- end }}

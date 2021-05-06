@@ -12,8 +12,8 @@ spec:
     metadata:
       labels:
         app: gitops-updater
-      {{- if .Values.podLabels }}
-      {{- toYaml .Values.podLabels | nindent 8 }}
+      {{- if .Values.azure }}
+        aadpodidbinding: gitops-updater-azure-kv
       {{- end }}
     spec:
       containers:
@@ -26,20 +26,27 @@ spec:
             - name: GITOPS_UPDATER_VERSION
               value: "{{ .Chart.AppVersion }}"
             - name: GITHUB_TOKEN_PATH
-              value: "{{ .Values.github_secrets_path }}"
+              value: "{{ .Values.githubTokenPath }}"
             - name: CONFIG_PATH
               value: "/mnt/config/config.yaml"
           volumeMounts:
             - name: config-volume
               mountPath: /mnt/config
-          {{- if .Values.extraVolumeMounts }}
-          {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
+          {{- if .Values.azure }}
+            - name: secrets-store-inline
+              mountPath: {{ .Values.azure.mountPath }}
+              readOnly: true
           {{- end }}
 
       volumes:
         - name: config-volume
           configMap:
             name: gitops-updater-configmap
-      {{- if .Values.extraVolumes }}
-      {{- toYaml .Values.extraVolumes | nindent 8 }}
+      {{- if .Values.azure }}
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "gitops-updater-secretproviderclass"
       {{- end }}

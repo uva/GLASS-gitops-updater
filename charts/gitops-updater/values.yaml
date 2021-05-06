@@ -1,16 +1,24 @@
 hostname: "gitops-updater.local"
-ingress_class: "nginx"
+ingressClass: "nginx"
 image: glass.azurecr.io/gitops-updater
 
-podLabels: {}
-github_secrets_path: "/mnt/secrets/gitops-updater-github-token"
+githubTokenPath: /mnt/secrets/gitops-updater-github-token
 
-config: |
+config:
   - name: example-name
     repo: example/repo
     branch: main
     manifest: directory/manifest.yaml
-    secret_path: /mnt/secrets/gitops-updater-secret
+    secretPath: /mnt/secrets/gitops-updater-secret
 
-extraVolumes: {}
-extraVolumeMounts: {}
+azure:
+  keyvaultName: keyvaultName
+  resourceGroup: resourceGroupName
+  subscriptionId: subscriptionId
+  tenantId: tenantId
+  clientId: clientId
+  identityName: identityName
+  mountPath: "/mnt/secrets"
+  secrets:
+    - gitops-updater-github-token
+    - gitops-updater-secret

@@ -4,7 +4,7 @@ metadata:
   name: "gitops-updater-ingress"
   namespace: "{{ .Release.Namespace }}"
   annotations:
-    kubernetes.io/ingress.class: "{{ .Values.ingress_class }}"
+    kubernetes.io/ingress.class: "{{ .Values.ingressClass }}"
 spec:
   tls:
     - hosts:

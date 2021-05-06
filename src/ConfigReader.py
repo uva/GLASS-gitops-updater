@@ -15,7 +15,7 @@ class ConfigReader:
                         row['repo'],
                         row['branch'],
                         row['manifest'],
-                        row['secret_path']
+                        row['secretPath']
                     )
 
         raise Exception("Couldn't read config")
