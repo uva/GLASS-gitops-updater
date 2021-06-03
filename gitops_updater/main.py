@@ -2,8 +2,9 @@ import os
 
 from flask import Flask, request, json
 
-from ConfigReader import ConfigReader
-from GitHubYamlFile import GitHubYamlFile
+from gitops_updater.config import ConfigReader
+from gitops_updater.handlers.argocd import ArgoCD
+from gitops_updater.handlers.template import Template
 
 app = Flask(__name__)
 
@@ -16,8 +17,6 @@ def __json_response(status: int, payload):
 def handle():
     if 'CONFIG_PATH' not in os.environ:
         return __json_response(422, {'error': 'CONFIG_PATH not set'})
-    if 'GITHUB_TOKEN_PATH' not in os.environ:
-        return __json_response(422, {'error': 'GITHUB_TOKEN_PATH not set'})
 
     name = request.args.get('name')
     secret = request.args.get('secret')
@@ -31,16 +30,25 @@ def handle():
         if not config.valid_secret(secret):
             return __json_response(422, {'error': 'Invalid secret'})
 
-        github_file = GitHubYamlFile.create_from_config(os.environ['GITHUB_TOKEN_PATH'], config)
-        github_file.check_target_version(version)
-        github_file.update_version(version)
+        provider = ConfigReader().find_provider(os.environ['CONFIG_PATH'], config.provider)
 
-        return __json_response(200, {
-            'message': f'updated successfully',
-            'old_version': github_file.current_version,
-            'new_version': version
-        })
+        if config.handler == 'template':
 
+            id_ = request.args.get('id')
+            if id_ is None:
+                return __json_response(422, {'error': 'Missing GET-arguments'})
+
+            id_ = int(id_)
+            handler = Template(config, provider)
+            response = handler.handle(id_, version)
+
+            return __json_response(200, response)
+
+        if config.handler == 'argocd':
+            handler = ArgoCD(config, provider)
+            response = handler.handle(version)
+
+            return __json_response(200, response)
     except Exception as e:
         return __json_response(422, {'error': str(e)})
 

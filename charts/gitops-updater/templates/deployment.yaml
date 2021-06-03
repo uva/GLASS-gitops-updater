@@ -25,8 +25,6 @@ spec:
           env:
             - name: GITOPS_UPDATER_VERSION
               value: "{{ .Chart.AppVersion }}"
-            - name: GITHUB_TOKEN_PATH
-              value: "{{ .Values.githubTokenPath }}"
             - name: CONFIG_PATH
               value: "/mnt/config/config.yaml"
           volumeMounts:
