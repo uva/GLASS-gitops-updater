@@ -18,6 +18,9 @@ class ConfigEntry:
             stored_secret = file.read()
             return stored_secret == secret
 
+    def secret(self) -> str:
+        with open(self.secret_path, 'r') as file:
+            return file.read()
 
 class ConfigReader:
     def find(self, filename: str, name: str) -> ConfigEntry:

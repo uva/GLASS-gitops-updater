@@ -1,3 +1,5 @@
+import hashlib
+import hmac
 import os
 
 from flask import Flask, request, json
@@ -60,6 +62,9 @@ def github_webhook():
     if 'action' not in body or 'number' not in body:
         return __json_response(422, {'error': 'Missing JSON-arguments'})
 
+    if 'X-Hub-Signature-256' not in request.headers:
+        return __json_response(422, {'error': 'Missing X-Hub-Signature-256 header'})
+
     if body['action'] != 'closed':
         return __json_response(200, {'message': 'action not closed, skipping'})
 
@@ -77,6 +82,8 @@ def github_webhook():
         config = ConfigReader().find(os.environ['CONFIG_PATH'], name)
         if not config.valid_secret(secret):
             return __json_response(422, {'error': 'Invalid secret'})
+
+        print(hmac.new(bytes(config.secret(), 'UTF-8'), request.data, hashlib.sha256).hexdigest())
 
         provider = ConfigReader().find_provider(os.environ['CONFIG_PATH'], config.provider)
         handler = Template(config, provider)
