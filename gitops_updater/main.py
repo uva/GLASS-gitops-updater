@@ -72,18 +72,18 @@ def github_webhook():
         return __json_response(422, {'error': 'CONFIG_PATH not set'})
 
     name = request.args.get('name')
-    secret = request.args.get('secret')
     id_ = body['number']
 
-    if name is None or secret is None:
+    if name is None:
         return __json_response(422, {'error': 'Missing GET-arguments'})
 
     try:
         config = ConfigReader().find(os.environ['CONFIG_PATH'], name)
-        if not config.valid_secret(secret):
-            return __json_response(422, {'error': 'Invalid secret'})
 
-        print(hmac.new(bytes(config.secret(), 'UTF-8'), request.data, hashlib.sha256).hexdigest())
+        expected = hmac.new(bytes(config.secret(), 'UTF-8'), request.data, hashlib.sha256).hexdigest()
+        incoming = request.headers.get('X-Hub-Signature-256').split('sha256=')[-1].strip()
+        if not hmac.compare_digest(incoming, expected):
+            return __json_response(422, {'error': 'Invalid secret in X-Hub-Signature-256 header'})
 
         provider = ConfigReader().find_provider(os.environ['CONFIG_PATH'], config.provider)
         handler = Template(config, provider)
