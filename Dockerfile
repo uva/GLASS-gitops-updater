@@ -14,4 +14,5 @@ COPY ./Pipfile .
 COPY ./Pipfile.lock .
 RUN pipenv lock --keep-outdated --requirements > requirements.txt
 RUN pip install -r requirements.txt
-COPY src/*.py /app/
+COPY gitops_updater /app/gitops_updater
+COPY main.py /app/main.py

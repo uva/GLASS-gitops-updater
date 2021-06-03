@@ -2,14 +2,19 @@ hostname: "gitops-updater.local"
 ingressClass: "nginx"
 image: glass.azurecr.io/gitops-updater
 
-githubTokenPath: /mnt/secrets/gitops-updater-github-token
-
 config:
   - name: example-name
-    repo: example/repo
-    branch: main
-    manifest: directory/manifest.yaml
+    path: directory/manifest.yaml
     secretPath: /mnt/secrets/gitops-updater-secret
+    handler: argocd
+    provider: my-github-repo
+
+providers:
+  - name: my-github-repo
+    repository: example/repo
+    branch: main
+    type: GitHub
+    tokenPath: /mnt/secrets/gitops-updater-github-token
 
 azure:
   keyvaultName: keyvaultName
