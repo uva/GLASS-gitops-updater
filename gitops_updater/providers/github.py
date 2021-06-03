@@ -42,3 +42,8 @@ class GitHubProvider(GitProvider):
         content_file: ContentFile
         content_file = gitfile.source
         self.repo.update_file(content_file.path, message, content, content_file.sha, branch=self.branch)
+
+    def delete_file(self, gitfile: GitFile, message: str):
+        content_file: ContentFile
+        content_file = gitfile.source
+        self.repo.delete_file(content_file.path, message, content_file.sha, branch=self.branch)

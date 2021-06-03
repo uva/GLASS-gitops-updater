@@ -53,5 +53,39 @@ def handle():
         return __json_response(422, {'error': str(e)})
 
 
+@app.route('/gitops-updater/webhooks/github', methods=['POST'])
+def github_webhook():
+    body = request.get_json()
+
+    if 'action' not in body or 'number' not in body:
+        return __json_response(422, {'error': 'Missing JSON-arguments'})
+
+    if body['action'] != 'closed':
+        return __json_response(200, {'message': 'action not closed, skipping'})
+
+    if 'CONFIG_PATH' not in os.environ:
+        return __json_response(422, {'error': 'CONFIG_PATH not set'})
+
+    name = request.args.get('name')
+    secret = request.args.get('secret')
+    id_ = body['number']
+
+    if name is None or secret is None:
+        return __json_response(422, {'error': 'Missing GET-arguments'})
+
+    try:
+        config = ConfigReader().find(os.environ['CONFIG_PATH'], name)
+        if not config.valid_secret(secret):
+            return __json_response(422, {'error': 'Invalid secret'})
+
+        provider = ConfigReader().find_provider(os.environ['CONFIG_PATH'], config.provider)
+        handler = Template(config, provider)
+        response = handler.handle_closed_pr(id_)
+
+        return __json_response(200, response)
+    except Exception as e:
+        return __json_response(422, {'error': str(e)})
+
+
 if __name__ == '__main__':
     app.run()

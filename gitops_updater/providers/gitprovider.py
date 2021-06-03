@@ -25,3 +25,7 @@ class GitProvider(ABC):
     @abstractmethod
     def update_file(self, gitfile: GitFile, message: str, content: str):
         ...
+
+    @abstractmethod
+    def delete_file(self, gitfile: GitFile, message: str):
+        ...

@@ -49,3 +49,18 @@ class Template:
         filename_segments[0] = '{}-{}'.format(filename_segments[0], id_)
 
         return os.path.join(directory, '.'.join([segment for segment in filename_segments if segment != 'j2']))
+
+    def handle_closed_pr(self, id_: int):
+        target_path = self.get_target_path(self.config.path, id_)
+        target_exists = self.provider.file_exists(target_path)
+
+        if not target_exists:
+            return {'message': 'target not deployed'}
+
+        file: GitFile
+        file = self.provider.get_file(target_path)
+        message = 'Delete {}:{}'.format(self.config.name, id_)
+
+        self.provider.delete_file(file, message)
+
+        return {'message': 'removed feature deployment'}
