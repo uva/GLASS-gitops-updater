@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "8d1f7a82c2aa6fdc9319a27c1fed60efcab8921d0c889452e36dfa8b9e11e25d"
+            "sha256": "424e372223111cf385900a65c47a3760a0ef65a4611992e03ff1d3fa5d0435f5"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -211,6 +211,14 @@
             ],
             "version": "==1.4.0"
         },
+        "python-gitlab": {
+            "hashes": [
+                "sha256:50ad46e29b664ddc4fc95141af2cf0c7c5f4ee6906f9c02cc3d6eda036aa65fe",
+                "sha256:f3364a8d1e813a0b3e68485db1e1881d8653b0e03b9a41f2c59544fce4930101"
+            ],
+            "index": "pypi",
+            "version": "==2.8.0"
+        },
         "requests": {
             "hashes": [
                 "sha256:27973dd4a904a4f13b263a19c866c13b92a39ed1c964655f025f3f8d3d75b804",
@@ -218,13 +226,20 @@
             ],
             "version": "==2.25.1"
         },
+        "requests-toolbelt": {
+            "hashes": [
+                "sha256:380606e1d10dc85c3bd47bf5a6095f815ec007be7a8b69c878507068df059e6f",
+                "sha256:968089d4584ad4ad7c171454f0a5c6dac23971e9472521ea3b6d49d610aa6fc0"
+            ],
+            "version": "==0.9.1"
+        },
         "ruamel.yaml": {
             "hashes": [
-                "sha256:25c3eaf4f0c52bd15c50c39b100a32168891240f4d2177a4690d5d9b85944bbe",
-                "sha256:5c3fa739bbedd2f23769656784e671c6335d17a5bf163c3c3901d8663c0af287"
+                "sha256:374373b4743aee9f6d9f40bea600fe020a7ac7ae36b838b4a6a93f72b584a14c",
+                "sha256:8873a6f5516e0d848c92418b0b006519c0566b6cd0dcee7deb9bf399e2bd204f"
             ],
             "index": "pypi",
-            "version": "==0.17.7"
+            "version": "==0.17.9"
         },
         "ruamel.yaml.clib": {
             "hashes": [
@@ -283,7 +298,6 @@
                 "sha256:753a0374df26658f99d826cfe40394a686d05985786d946fbe4165b5148f5a7c",
                 "sha256:a7acd0977125325f516bda9735fa7142b909a8d01e8b2e4c8108d0984e6e0098"
             ],
-            "index": "pypi",
             "version": "==1.26.5"
         },
         "werkzeug": {

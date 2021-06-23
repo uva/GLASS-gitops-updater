@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from ruamel.yaml import YAML
 
 from gitops_updater.providers.github import GitHubProvider
+from gitops_updater.providers.gitlab import GitLabProvider
 
 
 @dataclass
@@ -46,5 +47,7 @@ class ConfigReader:
             for row in yamlfile['providers']:
                 if row['name'] == name and row['type'] == 'GitHub':
                     return GitHubProvider(row['tokenPath'], row['branch'], row['repository'])
+                if row['name'] == name and row['type'] == 'GitLab':
+                    return GitLabProvider(row['url'], row['tokenPath'], row['branch'], row['project'])
 
         raise Exception("Couldn't read config")

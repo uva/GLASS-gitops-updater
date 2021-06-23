@@ -15,6 +15,12 @@ providers:
     branch: main
     type: GitHub
     tokenPath: /mnt/secrets/gitops-updater-github-token
+  - name: my-gitlab-repo
+    project: example/project
+    url: https://gitlab.com
+    branch: main
+    type: GitLab
+    tokenPath: gitlab_token
 
 azure:
   keyvaultName: keyvaultName

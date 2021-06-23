@@ -8,6 +8,7 @@ flask = "*"
 "ruamel.yaml" = "*"
 pygithub = "*"
 semver = "==2.13.0"
+python-gitlab = "*"
 
 [dev-packages]
 
