@@ -4,8 +4,6 @@ on:
   release:
     types:
       - created
-      - released
-      - published
 
 env:
   REGISTRY: ghcr.io
@@ -34,6 +32,8 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=semver,pattern={{version}},prefix=gitops-updater
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
