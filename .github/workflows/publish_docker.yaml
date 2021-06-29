@@ -33,7 +33,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=match,pattern=gitops-updater-(.*)
+            type=match,pattern=gitops-updater-(.*),group=1
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
