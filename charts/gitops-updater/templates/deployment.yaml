@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: gitops-updater
-          image: "{{ .Values.image }}:latest"
+          image: "{{ .Values.image }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: Always
           ports:
             - containerPort: 80
