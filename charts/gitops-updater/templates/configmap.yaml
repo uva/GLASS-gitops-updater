@@ -16,7 +16,12 @@ data:
     providers:
     {{- range .Values.providers }}
     - name: {{ .name }}
+    {{- if eq .type "GitHub" }}
       repository: {{ .repository }}
+    {{- else if eq .type "GitLab" }}
+      url: {{ .url }}
+      project: {{ .project }}
+    {{- end }}
       branch: {{ .branch }}
       type: {{ .type }}
       tokenPath: {{ .tokenPath }}
