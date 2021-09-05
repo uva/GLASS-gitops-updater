@@ -25,7 +25,7 @@ class ArgoCD:
             return {'message': 'Already up-to-date'}
 
         if current_version > target_version:
-            return {'message': 'Not downgrading'}
+            raise Exception('Not downgrading')
 
         updated_content = yaml_file.update(version)
         message = f'Update {self.config.name} to {target_version}'
