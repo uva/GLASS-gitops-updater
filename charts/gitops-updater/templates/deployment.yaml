@@ -16,6 +16,7 @@ spec:
         aadpodidbinding: gitops-updater-azure-kv
       {{- end }}
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: gitops-updater
           image: "{{ .Values.image }}:{{ .Chart.AppVersion }}"
@@ -27,6 +28,10 @@ spec:
               value: "{{ .Chart.AppVersion }}"
             - name: CONFIG_PATH
               value: "/mnt/config/config.yaml"
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
           volumeMounts:
             - name: config-volume
               mountPath: /mnt/config
