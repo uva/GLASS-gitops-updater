@@ -7,6 +7,7 @@ metadata:
     kubernetes.io/ingress.class: "{{ .Values.ingressClass }}"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
+  ingressClassName: "{{ .Values.ingressClass }}"
   tls:
     - hosts:
         - "{{ .Values.hostname }}"
