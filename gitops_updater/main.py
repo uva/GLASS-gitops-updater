@@ -42,9 +42,13 @@ def handle():
 
             id_ = int(id_)
             handler = Template(config, provider)
-            response = handler.handle(id_, version)
 
-            return __json_response(200, response)
+            if version == "delete":
+                response = handler.handle_closed_pr(id_)
+                return __json_response(200, response)
+            else:
+                response = handler.handle(id_, version)
+                return __json_response(200, response)
 
         if config.handler == 'argocd':
             handler = ArgoCD(config, provider)
