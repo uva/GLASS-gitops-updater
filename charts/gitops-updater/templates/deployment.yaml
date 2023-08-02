@@ -13,10 +13,13 @@ spec:
       labels:
         app: gitops-updater
       {{- if .Values.azure }}
-        aadpodidbinding: gitops-updater-azure-kv
+        azure.workload.identity/use: "true"
       {{- end }}
     spec:
       automountServiceAccountToken: false
+      {{- if .Values.azure }}
+      serviceAccountName: gitops-updater-sa
+      {{- end }}
       containers:
         - name: gitops-updater
           image: "{{ .Values.image }}:{{ .Chart.AppVersion }}"
