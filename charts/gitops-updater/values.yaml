@@ -24,11 +24,8 @@ providers:
 
 azure:
   keyvaultName: keyvaultName
-  resourceGroup: resourceGroupName
-  subscriptionId: subscriptionId
   tenantId: tenantId
   clientId: clientId
-  identityName: identityName
   mountPath: "/mnt/secrets"
   secrets:
     - gitops-updater-github-token
