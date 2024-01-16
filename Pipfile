@@ -9,6 +9,7 @@ flask = "*"
 pygithub = "*"
 semver = "==2.13.0"
 python-gitlab = "*"
+gunicorn = "*"
 
 [dev-packages]
 
