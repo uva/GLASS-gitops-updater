@@ -398,11 +398,12 @@
         },
         "python-gitlab": {
             "hashes": [
-                "sha256:cc1dc49c562c02ffbad3656e668234c45ea6210688ade59865b284313f45000d",
-                "sha256:eb31d1f2bfd8653f74996f9d0bf84ce7afb0843f9122a257c9a93b0e027d1df0"
+                "sha256:1d117bf7b433ae8255e5d74e72c660978f50ee85eb62248c9fb52ef43c3e3814",
+                "sha256:cdad39d016f59664cdaad0f878f194c79cb4357630776caa9a92c1da25c8d986"
             ],
             "index": "pypi",
-            "version": "==4.3.0"
+            "markers": "python_full_version >= '3.8.0'",
+            "version": "==4.4.0"
         },
         "requests": {
             "hashes": [
