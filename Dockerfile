@@ -20,4 +20,4 @@ RUN chown -R gitops-updater:gitops-updater /app
 WORKDIR /app
 USER gitops-updater
 
-CMD ["gunicorn", "--conf", "/app/gunicorn_conf.py", "--bind", "0.0.0.0:8080", "gitops_updater.main:app"]
+CMD ["gunicorn", "--conf", "/app/gunicorn_conf.py", "--bind", "0.0.0.0:8080", "gitops_updater.main:app", "--logger-class", "gitops_updater.logger.CustomGunicornLogger"]
