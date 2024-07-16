@@ -29,7 +29,6 @@
                 "sha256:5a1e7645bc0ec61a09e26c36f6106dd4cf40c6db3a1fb6352b0244e7fb057c7b",
                 "sha256:c198e21b1289c2ab85ee4e67bb4b4ef3ead0892059901a8d5b622f24a1101e90"
             ],
-            "index": "pypi",
             "markers": "python_version >= '3.6'",
             "version": "==2024.7.4"
         },
@@ -419,12 +418,12 @@
         },
         "python-gitlab": {
             "hashes": [
-                "sha256:03f194aa9f538087d141eb5ee6a7d95dc06c8c021ca3c7a116abdf9cae656b12",
-                "sha256:b798cddbd9d166b79571e6d6c97542978d0a395de57169c7097d09210a766a6d"
+                "sha256:89d7e24ff8fcb2b6845f1379350d0e0cdfbdae42b824bc4fa194c5a7a9a774bc",
+                "sha256:c2c4d7b1cd503d905afe5dfc0f3f6619934361f76ae855c6cec9a666864d37cf"
             ],
             "index": "pypi",
             "markers": "python_full_version >= '3.8.0'",
-            "version": "==4.7.0"
+            "version": "==4.8.0"
         },
         "requests": {
             "hashes": [
