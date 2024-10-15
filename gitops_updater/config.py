@@ -28,6 +28,10 @@ class ConfigReader:
         yaml = YAML()
         with open(filename, 'r') as file:
             yamlfile = yaml.load(file)
+
+            if 'config' not in yamlfile:
+                raise Exception("Couldn't read config: Unable to locate config section")
+
             for row in yamlfile['config']:
                 if row['name'] == name:
                     return ConfigEntry(
@@ -38,16 +42,19 @@ class ConfigReader:
                         row['provider']
                     )
 
-        raise Exception("Couldn't read config")
+        raise Exception(f"Couldn't read config: Unable to locate entry with the name '{name}'")
 
     def find_provider(self, filename: str, name: str):
         yaml = YAML()
         with open(filename, 'r') as file:
             yamlfile = yaml.load(file)
             for row in yamlfile['providers']:
-                if row['name'] == name and row['type'] == 'GitHub':
-                    return GitHubProvider(row['tokenPath'], row['branch'], row['repository'])
-                if row['name'] == name and row['type'] == 'GitLab':
-                    return GitLabProvider(row['url'], row['tokenPath'], row['branch'], row['project'])
+                if row['name'] == name:
+                    if row['type'] == 'GitHub':
+                        return GitHubProvider(row['tokenPath'], row['branch'], row['repository'])
+                    if row['type'] == 'GitLab':
+                        return GitLabProvider(row['url'], row['tokenPath'], row['branch'], row['project'])
 
-        raise Exception("Couldn't read config")
+                    raise Exception(f"Couldn't read config: Unable to resolve provider type '{row['type']}'")
+                
+        raise Exception(f"Couldn't read config: The provider with name '{name}' could not be found")
