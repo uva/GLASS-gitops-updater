@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   gitops-updater:
   - apiVersion: v2
+    appVersion: 0.7.8
+    created: "2025-05-14T07:17:01.839514171Z"
+    description: A webserver that updates version in yaml files within a git repository
+    digest: 7a2694e213c959ec1c4be655651c0936763a9b42902d21d087d8c580aa64f566
+    name: gitops-updater
+    type: application
+    urls:
+    - https://github.com/uva/GLASS-gitops-updater/releases/download/gitops-updater-0.7.8/gitops-updater-0.7.8.tgz
+    version: 0.7.8
+  - apiVersion: v2
     appVersion: 0.7.7
     created: "2025-03-07T07:42:35.833519538Z"
     description: A webserver that updates version in yaml files within a git repository
@@ -461,4 +471,4 @@ entries:
     urls:
     - https://github.com/uva/GLASS-gitops-updater/releases/download/gitops-updater-0.2.0/gitops-updater-0.2.0.tgz
     version: 0.2.0
-generated: "2025-03-07T07:42:35.833883705Z"
+generated: "2025-05-14T07:17:01.839926525Z"
