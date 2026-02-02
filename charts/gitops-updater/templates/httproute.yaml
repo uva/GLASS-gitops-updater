@@ -8,7 +8,7 @@ spec:
     - name: '{{ .Values.gatewayName }}'
       namespace: '{{ .Release.Namespace }}'
   hostnames:
-{{ toYaml .Values.hostnames | indent 4 }}
+    - {{ .Values.hostname }}
   rules:
     - matches:
         - path:
