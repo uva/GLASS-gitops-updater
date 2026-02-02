@@ -1,0 +1,19 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: "gitops-updater-httproute"
+  namespace: '{{ .Release.Namespace }}'
+spec:
+  parentRefs:
+    - name: '{{ .Values.gatewayName }}'
+      namespace: '{{ .Release.Namespace }}'
+  hostnames:
+{{ toYaml .Values.hostnames | indent 4 }}
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /gitops-updater
+      backendRefs:
+        - name: gitops-updater
+          port: 80
