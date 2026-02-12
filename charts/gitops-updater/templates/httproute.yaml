@@ -1,4 +1,4 @@
-{{- if .Values.gatewayName }}
+{{- if .Values.httpRouteParentRefs }}
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
@@ -6,8 +6,16 @@ metadata:
   namespace: '{{ .Release.Namespace }}'
 spec:
   parentRefs:
-    - name: '{{ .Values.gatewayName }}'
-      namespace: '{{ .Release.Namespace }}'
+    {{- range .Values.httpRouteParentRefs }}
+    - name: {{ .name }}
+      namespace: {{ .namespace | default $.Release.Namespace }}
+      {{- if .sectionName }}
+      sectionName: {{ .sectionName }}
+      {{- end }}
+      {{- if .port }}
+      port: {{ .port }}
+      {{- end }}
+    {{- end }}
   hostnames:
     - {{ .Values.hostname }}
   rules:
