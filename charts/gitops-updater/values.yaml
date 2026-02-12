@@ -1,7 +1,7 @@
 hostname: "gitops-updater.local"
 ingressClass: "nginx"
 
-routeParentRefs:
+httpRouteParentRefs:
   - name: "gateway" 
   
 image: ghcr.io/uva/glass-gitops-updater
