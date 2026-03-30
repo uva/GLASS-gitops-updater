@@ -551,19 +551,18 @@
         },
         "python-gitlab": {
             "hashes": [
-                "sha256:68980cd70929fc7f8f06d8a7b09bd046a6b79e1995c19d61249f046005099100",
-                "sha256:bc531e8ba3e5641b60409445d4919ace68a2c18cb0ec6d48fbced6616b954166"
+                "sha256:884618d4d60beadb21bb0c5f0cca46e70c6e501784f136bf0b6f85f5bc15ce62",
+                "sha256:de874dc538db6dceb48929f4c8fb55d6064dd19cb3ffdad1100190f835c5b674"
             ],
             "index": "pypi",
-            "markers": "python_full_version >= '3.9.0'",
-            "version": "==5.6.0"
+            "markers": "python_full_version >= '3.10.0'",
+            "version": "==8.2.0"
         },
         "requests": {
             "hashes": [
                 "sha256:3324635456fa185245e24865e810cecec7b4caf933d7eb133dcde67d48cee69b",
                 "sha256:c7ebc5e8b0f21837386ad0e1c8fe8b829fa5f544d8df3b2253bff14ef29d7652"
             ],
-            "index": "pypi",
             "markers": "python_version >= '3.10'",
             "version": "==2.33.0"
         },
