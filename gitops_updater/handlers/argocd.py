@@ -48,7 +48,7 @@ class ArgoCDYamlFile:
             if 'source' in spec and spec['source'] is not None:
                 self.version = spec['source']['targetRevision']
                 self.segment = segment
-                self.use_sources = False
+                self.chart_source = spec['source']
                 return
 
             if 'sources' in spec and spec['sources'] is not None:
@@ -57,7 +57,6 @@ class ArgoCDYamlFile:
                         self.version = source['targetRevision']
                         self.segment = segment
                         self.chart_source = source
-                        self.use_sources = True
                         return
 
         raise Exception("Couldn't locate segment in yaml file")
@@ -66,10 +65,7 @@ class ArgoCDYamlFile:
         return semver.VersionInfo.parse(self.version)
 
     def update(self, version: str) -> str:
-        if self.use_sources:
-            self.chart_source['targetRevision'] = version
-        else:
-            self.segment['spec']['source']['targetRevision'] = version
+        self.chart_source['targetRevision'] = version
         stream = StringIO()
         self.yaml_loader.dump_all(self.yaml_content, stream)
         return stream.getvalue()
