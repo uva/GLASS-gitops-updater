@@ -47,7 +47,6 @@ class ArgoCDYamlFile:
             spec = segment['spec']
             if 'source' in spec and spec['source'] is not None:
                 self.version = spec['source']['targetRevision']
-                self.segment = segment
                 self.chart_source = spec['source']
                 return
 
@@ -55,7 +54,6 @@ class ArgoCDYamlFile:
                 for source in spec['sources']:
                     if 'chart' in source and source['chart'] is not None:
                         self.version = source['targetRevision']
-                        self.segment = segment
                         self.chart_source = source
                         return
 
