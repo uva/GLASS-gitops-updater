@@ -26,11 +26,11 @@
         },
         "certifi": {
             "hashes": [
-                "sha256:027692e4402ad994f1c42e52a4997a9763c646b73e4096e4d5d6db8af1d6f0fa",
-                "sha256:e887ab5cee78ea814d3472169153c2d12cd43b14bd03329a39a9c6e2e80bfba7"
+                "sha256:3cb2210c8f88ba2318d29b0388d1023c8492ff72ecdde4ebdaddbb13a31b1c4a",
+                "sha256:8d455352a37b71bf76a79caa83a3d6c25afee4a385d632127b6afb3963f1c580"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==2026.2.25"
+            "version": "==2026.4.22"
         },
         "cffi": {
             "hashes": [
@@ -348,11 +348,11 @@
         },
         "idna": {
             "hashes": [
-                "sha256:771a87f49d9defaf64091e6e6fe9c18d4833f140bd19464795bc32d966ca37ea",
-                "sha256:795dafcc9c04ed0c1fb032c2aa73654d8e8c5023a7df64a53f39190ada629902"
+                "sha256:585ea8fe5d69b9181ec1afba340451fba6ba764af97026f92a91d4eef164a242",
+                "sha256:892ea0cde124a99ce773decba204c5552b69c3c67ffd5f232eb7696135bc8bb3"
             ],
             "markers": "python_version >= '3.8'",
-            "version": "==3.11"
+            "version": "==3.13"
         },
         "importlib-metadata": {
             "hashes": [
@@ -550,12 +550,12 @@
         },
         "python-gitlab": {
             "hashes": [
-                "sha256:68980cd70929fc7f8f06d8a7b09bd046a6b79e1995c19d61249f046005099100",
-                "sha256:bc531e8ba3e5641b60409445d4919ace68a2c18cb0ec6d48fbced6616b954166"
+                "sha256:2ca67cf64b8d9290fe64463cfef6e77dbde066285dd848db2eb7816d6a7e9ec9",
+                "sha256:7aace3585d57ee97ebcb74bc776f30af3e861e285290082a91646348aca3f22a"
             ],
             "index": "pypi",
-            "markers": "python_full_version >= '3.9.0'",
-            "version": "==5.6.0"
+            "markers": "python_full_version >= '3.10.0'",
+            "version": "==8.3.0"
         },
         "requests": {
             "hashes": [
