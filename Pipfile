@@ -7,7 +7,7 @@ name = "pypi"
 flask = "*"
 "ruamel.yaml" = "*"
 pygithub = "*"
-semver = "==2.13.0"
+semver = "==3.0.4"
 python-gitlab = "*"
 gunicorn = "*"
 
