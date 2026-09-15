@@ -6,6 +6,7 @@ from flask import Flask, request, json
 
 from gitops_updater.config import ConfigReader
 from gitops_updater.handlers.argocd import ArgoCD
+from gitops_updater.handlers.fusionarchive import FusionArchive
 from gitops_updater.handlers.template import Template
 
 app = Flask(__name__)
@@ -52,6 +53,12 @@ def handle():
 
         if config.handler == 'argocd':
             handler = ArgoCD(config, provider)
+            response = handler.handle(version)
+
+            return __json_response(200, response)
+
+        if config.handler == 'fusion-archive':
+            handler = FusionArchive(config, provider)
             response = handler.handle(version)
 
             return __json_response(200, response)
