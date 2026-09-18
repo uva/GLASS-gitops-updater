@@ -4,7 +4,7 @@ from dataclasses import dataclass
 import jinja2
 
 from gitops_updater.config import ConfigEntry
-from gitops_updater.providers.gitprovider import GitProvider, GitFile
+from gitops_updater.providers.gitprovider import GitFile, GitProvider
 
 
 @dataclass
@@ -22,19 +22,19 @@ class Template:
         content = self.apply_template(template.content(), id_, version)
 
         if not target_exists:
-            message = 'Create {}:{} with version {}'.format(self.config.name, id_, version)
+            message = f"Create {self.config.name}:{id_} with version {version}"
             self.provider.create_file(target_path, content, message)
-            return {'message': 'File created'}
+            return {"message": "File created"}
 
         else:
-            message = 'Update {}:{} to {}'.format(self.config.name, id_, version)
+            message = f"Update {self.config.name}:{id_} to {version}"
             file: GitFile
             file = self.provider.get_file(target_path)
             if file.content() == content:
-                return {'message': 'Already up-to-date'}
+                return {"message": "Already up-to-date"}
             else:
                 self.provider.update_file(file, message, content)
-                return {'message': 'Version updated'}
+                return {"message": "Version updated"}
 
     def apply_template(self, content: str, id_: int, version) -> str:
         tm = jinja2.Template(content)
@@ -45,22 +45,25 @@ class Template:
         directory = os.path.dirname(source_path)
         filename = os.path.basename(source_path)
 
-        filename_segments = filename.split('.')
-        filename_segments[0] = '{}-{}'.format(filename_segments[0], id_)
+        filename_segments = filename.split(".")
+        filename_segments[0] = f"{filename_segments[0]}-{id_}"
 
-        return os.path.join(directory, '.'.join([segment for segment in filename_segments if segment != 'j2']))
+        return os.path.join(
+            directory,
+            ".".join([segment for segment in filename_segments if segment != "j2"]),
+        )
 
     def handle_closed_pr(self, id_: int):
         target_path = self.get_target_path(self.config.path, id_)
         target_exists = self.provider.file_exists(target_path)
 
         if not target_exists:
-            return {'message': 'target not deployed'}
+            return {"message": "target not deployed"}
 
         file: GitFile
         file = self.provider.get_file(target_path)
-        message = 'Delete {}:{}'.format(self.config.name, id_)
+        message = f"Delete {self.config.name}:{id_}"
 
         self.provider.delete_file(file, message)
 
-        return {'message': 'removed feature deployment'}
+        return {"message": "removed feature deployment"}

@@ -1,0 +1,34 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install pipenv
+        run: pip install pipenv
+
+      - name: Install dependencies
+        run: pipenv install --dev
+
+      - name: Lint with ruff
+        run: pipenv run ruff check .
+
+      - name: Format check with ruff
+        run: pipenv run ruff format --check .
+
+      - name: Run tests
+        run: pipenv run pytest -v

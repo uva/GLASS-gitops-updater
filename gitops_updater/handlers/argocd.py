@@ -1,11 +1,12 @@
 from dataclasses import dataclass
 
-from gitops_updater.config import ConfigEntry
-from gitops_updater.providers.gitprovider import GitProvider, GitFile
-
 import semver
 from ruamel.yaml import YAML
 from ruamel.yaml.compat import StringIO
+
+from gitops_updater.config import ConfigEntry
+from gitops_updater.providers.gitprovider import GitFile, GitProvider
+
 
 @dataclass
 class ArgoCD:
@@ -22,16 +23,16 @@ class ArgoCD:
         target_version = semver.VersionInfo.parse(version)
 
         if target_version == current_version:
-            return {'message': 'Already up-to-date'}
+            return {"message": "Already up-to-date"}
 
         updated_content = yaml_file.update(version)
-        message = f'Update {self.config.name} to {target_version}'
+        message = f"Update {self.config.name} to {target_version}"
         self.provider.update_file(file, message, updated_content)
 
         return {
-            'message': f'updated successfully',
-            'old_version': str(current_version),
-            'new_version': version
+            "message": "updated successfully",
+            "old_version": str(current_version),
+            "new_version": version,
         }
 
 
@@ -41,19 +42,19 @@ class ArgoCDYamlFile:
         self.yaml_content = list(self.yaml_loader.load_all(content))
 
         for segment in self.yaml_content:
-            if segment['metadata'] is None or segment['metadata']['name'] != name:
+            if segment["metadata"] is None or segment["metadata"]["name"] != name:
                 continue
 
-            spec = segment['spec']
-            if 'source' in spec and spec['source'] is not None:
-                self.version = spec['source']['targetRevision']
-                self.chart_source = spec['source']
+            spec = segment["spec"]
+            if "source" in spec and spec["source"] is not None:
+                self.version = spec["source"]["targetRevision"]
+                self.chart_source = spec["source"]
                 return
 
-            if 'sources' in spec and spec['sources'] is not None:
-                for source in spec['sources']:
-                    if 'chart' in source and source['chart'] is not None:
-                        self.version = source['targetRevision']
+            if "sources" in spec and spec["sources"] is not None:
+                for source in spec["sources"]:
+                    if "chart" in source and source["chart"] is not None:
+                        self.version = source["targetRevision"]
                         self.chart_source = source
                         return
 
@@ -63,7 +64,7 @@ class ArgoCDYamlFile:
         return semver.VersionInfo.parse(self.version)
 
     def update(self, version: str) -> str:
-        self.chart_source['targetRevision'] = version
+        self.chart_source["targetRevision"] = version
         stream = StringIO()
         self.yaml_loader.dump_all(self.yaml_content, stream)
         return stream.getvalue()
