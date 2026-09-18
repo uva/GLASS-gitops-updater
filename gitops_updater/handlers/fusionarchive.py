@@ -6,7 +6,7 @@ import re
 @dataclass
 class FusionArchive:
     _FUSION_ARCHIVE_REVISION_RE = re.compile(
-        r'(fusionArchive:\s*\n\s+targetRevision:\s*)(?<TargetRevision>(dev|acc|sandbox|prod)-(\d+\.\d+\.\d+))'
+        r'(fusionArchive:\s*\n\s+targetRevision:\s*)(?P<TargetRevision>(dev|acc|sandbox|prod)-(\d+\.\d+\.\d+))'
     )
 
     config: ConfigEntry
