@@ -1,5 +1,8 @@
 from dataclasses import dataclass
 
+from gitops_updater.config import ConfigEntry
+from gitops_updater.providers.gitprovider import GitProvider, GitFile
+
 import re
 
 
