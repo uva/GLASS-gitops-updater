@@ -12,6 +12,8 @@ python-gitlab = "*"
 gunicorn = "*"
 
 [dev-packages]
+pytest = "*"
+ruff = "*"
 
 [requires]
 python_version = "3.11"

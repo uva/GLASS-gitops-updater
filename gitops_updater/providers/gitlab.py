@@ -1,7 +1,7 @@
+from gitlab import Gitlab, GitlabGetError
 from gitlab.v4.objects import ProjectFile
 
-from gitops_updater.providers.gitprovider import GitProvider, GitFile
-from gitlab import Gitlab, GitlabGetError
+from gitops_updater.providers.gitprovider import GitFile, GitProvider
 
 
 class GitLabFile(GitFile):
@@ -14,9 +14,8 @@ class GitLabFile(GitFile):
 
 class GitLabProvider(GitProvider):
     def __init__(self, url: str, token_path: str, branch: str, project: str):
-        file = open(token_path, 'r')
-        gitlab_token = file.read()
-        file.close()
+        with open(token_path, "r") as file:
+            gitlab_token = file.read()
 
         self.client = Gitlab(url, private_token=gitlab_token)
         self.project = self.client.projects.get(project)
@@ -34,12 +33,14 @@ class GitLabProvider(GitProvider):
         return GitLabFile(f)
 
     def create_file(self, path: str, content: str, message: str):
-        self.project.files.create({
-            'file_path': path,
-            'branch': self.branch,
-            'content': content,
-            'commit_message': message
-        })
+        self.project.files.create(
+            {
+                "file_path": path,
+                "branch": self.branch,
+                "content": content,
+                "commit_message": message,
+            }
+        )
 
     def update_file(self, gitfile: GitLabFile, message: str, content: str):
         gitfile.source.content = content
