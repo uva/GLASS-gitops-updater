@@ -24,6 +24,14 @@ providers:
     branch: main
     type: GitLab
     tokenPath: gitlab_token
+  - name: my-bitbucket-repo
+    repository: example/repo
+    branch: main
+    type: Bitbucket
+    tokenPath: /mnt/secrets/gitops-updater-bitbucket-token
+    # For an API token, also set the Atlassian account email.
+    # Omit email when using a repository access token (Bearer authentication).
+    # email: automation@example.com
 
 azure:
   keyvaultName: keyvaultName

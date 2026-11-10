@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from ruamel.yaml import YAML
 
+from gitops_updater.providers.bitbucket import BitbucketProvider
 from gitops_updater.providers.github import GitHubProvider
 from gitops_updater.providers.gitlab import GitLabProvider
 
@@ -60,6 +61,13 @@ class ConfigReader:
                     if row["type"] == "GitLab":
                         return GitLabProvider(
                             row["url"], row["tokenPath"], row["branch"], row["project"]
+                        )
+                    if row["type"] == "Bitbucket":
+                        return BitbucketProvider(
+                            row["tokenPath"],
+                            row["branch"],
+                            row["repository"],
+                            row.get("email"),
                         )
 
                     raise Exception(
