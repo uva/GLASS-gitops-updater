@@ -21,6 +21,11 @@ data:
     {{- else if eq .type "GitLab" }}
       url: {{ .url }}
       project: {{ .project }}
+    {{- else if eq .type "Bitbucket" }}
+      repository: {{ .repository | quote }}
+    {{- if hasKey . "email" }}
+      email: {{ .email | quote }}
+    {{- end }}
     {{- end }}
       branch: {{ .branch }}
       type: {{ .type }}

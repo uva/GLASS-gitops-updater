@@ -3,7 +3,7 @@ GLASS-gitops-updater
 
 The `GLASS-gitops-updater` provides an HTTP API for updating YAML files stored in a git-repository.
 You can use this when you're using gitops software on your Kubernetes cluster like Argo CD or Flux.
-It's compatible with both GitHub and GitLab and can also do some tricks when you want to deploy review apps.
+It's compatible with GitHub, GitLab and Bitbucket Cloud and can also do some tricks when you want to deploy review apps.
 Besides that, the provider Helm chart also helps you out when you want to store the needed tokens within an
 Azure Key Vault.
 
@@ -38,6 +38,35 @@ providers:
     type: GitHub
     tokenPath: /mnt/secrets/gitops-updater-github-token
 ```
+
+Bitbucket Cloud provider
+-
+When configuring a Bitbucket Cloud provider, the configuration will look similar to the example below.
+You will need a repository access token with repository Read and Write permissions.
+Bitbucket Data Center/Server is not supported.
+
+Make sure the token is available to the Docker container as a mounted file, just like the GitHub PAT.
+Azure Key Vault is optional; when using it with the provided chart, add the token name to `azure.secrets`.
+```yaml
+providers:
+  - name: my-bitbucket-repo
+    repository: example/repo # workspace/repository-slug
+    branch: main
+    type: Bitbucket
+    tokenPath: /mnt/secrets/gitops-updater-bitbucket-token
+```
+
+Alternatively, use an [API token](https://support.atlassian.com/bitbucket-cloud/docs/using-api-tokens/)
+with both `read:repository:bitbucket` and `write:repository:bitbucket` scopes. In that case, add
+`email: automation@example.com` to the provider configuration, using the token owner's Atlassian account email.
+Leave `email` out when using a repository access token.
+
+To use this provider with the Argo CD example below, set `provider: my-bitbucket-repo` in the handler configuration.
+The branch must already exist and allow commits from the token owner. Updates are committed directly to that branch.
+
+Only regular UTF-8 files are supported; symlinks, executable files and Git LFS files are not supported.
+Run updates to the same branch sequentially: the branch-change check and commit are not atomic.
+After a network failure, check whether the commit succeeded before retrying.
 
 Argo CD handler
 -
