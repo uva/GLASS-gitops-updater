@@ -401,12 +401,12 @@
         },
         "gunicorn": {
             "hashes": [
-                "sha256:62b864895d9ebff0b2f9867ba04fe811c93121596540830c9c916d0769668447",
-                "sha256:bd249d0b3f7972f7432f0a6b6ff3b3ee2d129f70cd1ff6c09a9dd9e29a2b88e3"
+                "sha256:378b26b9a38adcf4592f28828233c1716acc55e833ea06bf48719782efaa0d10",
+                "sha256:b1514965361c8b7e8107a80aa2a92636878df1ccfac6dd204a676426e04d9e3e"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.10'",
-            "version": "==26.2.0"
+            "version": "==27.0.1"
         },
         "idna": {
             "hashes": [
